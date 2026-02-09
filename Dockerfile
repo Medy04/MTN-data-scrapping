@@ -40,7 +40,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Installer les dépendances Node.js
-RUN npm ci --only=production
+RUN npm install --omit=dev
 
 # Copier le code source
 COPY . .
@@ -61,7 +61,7 @@ EXPOSE 3000
 
 # Healthcheck
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:3000/health || exit 1
+  CMD wget --no-verbose --tries=1 --spider http://localhost:3002/health || exit 1
 
 # Démarrer l'application
 CMD ["node", "server.js"]
